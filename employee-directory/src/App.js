@@ -1,23 +1,35 @@
-import logo from './logo.svg';
 import './App.css';
+import React, { useState, useEffect } from "react";
+import Wrapper from "./components/Wrapper";
+import Navbar from "./components/Navbar";
+import EmployeeTable  from "./components/EmployeeTable";
+import employeeAPI from "./utils/api";
+import TableBody from './components/TableBody';
 
 function App() {
+
+  const [results, setResults] = useState([{}]);
+  const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    employeeAPI.getEmployees()
+    .then(res => {
+        console.log(res.data);
+        setResults(res.data.results)
+    })
+}, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Wrapper>
+        <Navbar />
+        <input placeholder="Search by employee name" value={search} onChange={e => setSearch(e.target.value)}></input>
+        <EmployeeTable>
+          <TableBody
+          employees= { results }>
+          </TableBody>
+        </EmployeeTable>
+      </Wrapper>
     </div>
   );
 }
