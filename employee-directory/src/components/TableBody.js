@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 function TableBody(props) {
   return (
@@ -8,9 +8,9 @@ function TableBody(props) {
           return (
             <tr>
               <td>
-                {/* <img alt={employee.name} src={employee.picture.large}></img> */}
+                <img alt={ name !== undefined ? name.first : ""} src={ picture !== undefined ? picture.large : "" }></img>
               </td>
-              <td>{name.last}</td>
+              <td>{ name !== undefined ? name.first : "" }</td>
               <td>{email}</td>
               <td>{phone}</td>
             </tr>
@@ -22,5 +22,4 @@ function TableBody(props) {
     </>
   );
 }
-
 export default TableBody;
